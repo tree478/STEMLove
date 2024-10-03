@@ -1,48 +1,56 @@
 <?php
-  /*
-  $receiving_email_address = 'shelkesoumya@gmail.com';
+$errors = [];
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get POST data
+    $name = isset($_POST['name']) ? strip_tags(trim($_POST['name'])) : '';
+    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $subject = isset($_POST['subject']) ? strip_tags(trim($_POST['subject'])) : '';
+    $message = isset($_POST['message']) ? strip_tags(trim($_POST['message'])) : '';
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+    // Validate form fields
+    if (empty($name)) {
+        $errors[] = 'Name is empty';
+    }
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  comment
+    if (empty($email)) {
+        $errors[] = 'Email is empty';
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Email is invalid';
+    }
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
+    if (empty($subject)) {
+      $errors[] = 'Subject is empty';
+    }
 
-  echo $contact->send();
-  */
+    if (empty($message)) {
+        $errors[] = 'Message is empty';
+    }
 
+    // If no errors, send email
+    if (empty($errors)) {
+        // Recipient email address (replace with your own)
+        $recipient = "stemlove.info@gmail.com";
 
-  $name = $_POST['name'];
-  $email = $_POST['email'];
-  $subject = $_POST['subject'];
-  $message = $_POST['message'];
+        // Additional headers
+        $headers = "From: $name <$email>";
 
-  $mailheader = "From: ".$name. "<".$email.">\r\n";
-
-  $recipient = "stemlove.info@gmail.com";
-
-  mail($recipient, $subject, $message, $mailheader)
-  or die("Error!")
+        // Send email
+        if (mail($recipient, $message, $headers)) {
+            echo "Email sent successfully!";
+        } else {
+            echo "Failed to send email. Please try again later.";
+        }
+    } else {
+        // Display errors
+        echo "The form contains the following errors:<br>";
+        foreach ($errors as $error) {
+            echo "- $error<br>";
+        }
+    }
+} else {
+    // Not a POST request, display a 403 forbidden error
+    header("HTTP/1.1 403 Forbidden");
+    echo "You are not allowed to access this page.";
+}
 ?>

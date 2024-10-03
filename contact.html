@@ -26,6 +26,8 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
 </head>
 
 <body class="contact-page">
@@ -81,26 +83,10 @@
               <p>Please send us a message if you would like to learn more about our mission or if you are interested in volunteering with us.</p>
 
               <div class="info-item d-flex">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h4>Location:</h4>
-                  <p>4 Valente Dr, Westborough, MA 01581</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex">
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
                   <h4>Email:</h4>
                   <p>stemlove.info@gmail.com</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex">
-                <i class="bi bi-phone flex-shrink-0"></i>
-                <div>
-                  <h4>Call:</h4>
-                  <p>+1 5589 55488 55</p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -109,7 +95,11 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="POST" role="form" class="php-email-form">
+            <form 
+            action="mailto: stemlove.info@gmail.com" 
+            method="POST" 
+            encrypte="multipart/form-data" 
+            class="php-email-form">
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
@@ -122,7 +112,7 @@
                 <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required="">
               </div>
               <div class="form-group mt-3">
-                <textarea class="form-control" name="message" placeholder="Message" required=""></textarea>
+                <textarea class="form-control" name="message" placeholder="Message" required height="143px"></textarea>
               </div>
               <div class="my-3">
                 <div class="loading">Loading</div>
@@ -131,7 +121,7 @@
               </div>
               <div class="text-center"><button type="submit" id="buttonLast">Send Message</button></div>
             </form>
-            <script>
+            <!--<script>
               $(document).ready(function(){
                 $("#buttonLast").click(function(){
                   $.ajax({
@@ -145,7 +135,7 @@
                   });
                 });
               });
-            </script>
+            </script> -->
           </div><!-- End Contact Form -->
 
         </div>
