@@ -1,12 +1,13 @@
 {
   "dependencies": {
+    "express": "^4.21.0",
     "node": "^20.18.0"
   },
   "name": "stemlove-website-final-version",
   "version": "1.0.0",
   "description": "a website for a non profit",
   "main": "index.js",
-  "devDependencies": {},
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
